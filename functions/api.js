@@ -2,7 +2,6 @@
 // const serverless = require("serverless-http");
 // const app = express();
 // const port = 3000;
-// const data = require("../data.json");
 
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");
@@ -32,6 +31,7 @@ const express = require("express");
 const serverless = require("serverless-http");
 const app = express();
 const router = express.Router();
+const data = require("../data.json");
 
 let records = [];
 
@@ -56,24 +56,13 @@ router.put("/", (req, res) => {
 });
 
 //showing demo records
-router.get("/demo", (req, res) => {
-  res.json([
-    {
-      id: "001",
-      name: "Smith",
-      email: "smith@gmail.com",
-    },
-    {
-      id: "002",
-      name: "Sam",
-      email: "sam@gmail.com",
-    },
-    {
-      id: "003",
-      name: "lily",
-      email: "lily@gmail.com",
-    },
-  ]);
+router.get("/character", (req, res) => {
+  res.send(data["charater-data"]);
+});
+
+router.get("/character/:id", (req, res) => {
+  const { id } = req.params;
+  res.send(data["charater-data"][id]);
 });
 
 app.use("/.netlify/functions/api", router);
